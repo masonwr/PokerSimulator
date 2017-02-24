@@ -21,6 +21,7 @@ getRandomHand = getRandomHand' []
             else return $ nub hand
 
 
+testRank :: (Hand -> Bool) -> IO Hand
 testRank rankPred = do
   hand <- getRandomHand
   if rankPred hand

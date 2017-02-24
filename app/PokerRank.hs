@@ -1,23 +1,31 @@
-module PokerRank where
+module PokerRank ( findRank ) where
 import Data.List
 import Hands
 
 data PokerRank = HighCard Card
                | Pair Rank
-               | TwoPair (Rank, Rank)
+               | TwoPair Hand
                | ThreeOfAKind Rank
                | Straight Card
                | Flush Suit
-               | FullHouse (Rank, Rank)
+               | FullHouse Rank
                | FourOfAKind Rank
                | StraitFlush Card
                deriving (Eq, Ord, Show)
 
 findRank :: Hand -> PokerRank
 findRank cards
-  | isPair cards          = HighCard $ maximum cards
-  | isStraightFlush cards = StraitFlush $ maximum cards
-  | otherwise             = HighCard $ maximum cards
+  | isStraightFlush cards = StraitFlush  $ maximum cards    
+  | isFourOfAKind cards   = FourOfAKind  $ extract cards    
+  | isFullHouse cards     = FullHouse    $ extract cards    
+  | isFlush cards         = Flush        $ snd $ head cards 
+  | isStraight cards      = Straight     $ maximum cards    
+  | isThreeOfAKind cards  = ThreeOfAKind $ extract cards
+  | isTwoPair cards       = TwoPair      $ sort cards
+  | isPair cards          = Pair         $ extract cards    
+  | otherwise             = HighCard $ maximum cards       
+  where extract = fst . snd . maximum . countCollected . collectByRank
+
 
 
 -- Rank Predicate Tests
@@ -53,17 +61,18 @@ isStraightFlush cards = isFlush cards && isStraight cards
 
 -- Utils
 collectBySuit :: Deck -> [Deck]
-collectBySuit = groupBy sameSuit . sortOn snd
-
+collectBySuit = collectBy snd
+  
 collectByRank :: Deck -> [Deck]
-collectByRank = groupBy sameRank . sortOn fst
+collectByRank = collectBy fst
 
-sameSuit :: Card -> Card -> Bool
-sameSuit (_, r1) (_, r2) = r1 == r2
+collectBy :: Ord b => (t -> b) -> [t] -> [[t]]
+collectBy fn = groupBy comp . sortOn fn
+  where comp c1 c2 = fn c1 == fn c2
 
-sameRank :: Card -> Card -> Bool
-sameRank (s1, _) (s2, _) = s1 == s2
-
+countCollected :: [[t]] -> [(Int, t)]
+countCollected xss = map simpler xss
+  where simpler xs = (length xs, head xs)
 
 getRanks :: Hand -> [Rank]
 getRanks = map fst
