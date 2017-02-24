@@ -38,8 +38,8 @@ type Deck = [Card]
 type Hand = Deck
 
 
-deck :: Deck
-deck  = [(r,s) | s <- [Spade ..], r <- [Two ..]]
+standardDeck :: Deck
+standardDeck  = [(r,s) | s <- [Spade ..], r <- [Two ..]]
 
 
 
