@@ -31,13 +31,22 @@ testRank rankPred = do
 
 main :: IO ()
 main = do
-  randoCard     <- getRandomElement $ deck \\ randoHAnd
-  randomDiscard <- getRandomElement randoHAnd
+  hand <- getRandomHand
+  
+  randomDiscard <- getRandomElement hand
+  randoCard     <- getRandomElement $ deck \\ hand
 
-  let newHand = randoCard : (randoHAnd \\ [randomDiscard])
+  let newHand = randoCard : (hand \\ [randomDiscard])
 
-  print randoCard
-  print randomDiscard
+  putStrLn "old hand:"
+  putStrLn $ "discard" ++ show randomDiscard
+  putStrLn $ show hand
+  putStrLn $ show $ findRank hand
 
-  print randoHAnd
-  print newHand
+  putStrLn ""
+
+  putStrLn "new hand:"
+  putStrLn $ show newHand
+  putStrLn $ show $ findRank newHand
+  
+  

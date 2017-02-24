@@ -42,9 +42,6 @@ deck :: Deck
 deck  = [(r,s) | s <- [Spade ..], r <- [Two ..]]
 
 
-randoHAnd :: Hand
-randoHAnd = take 5 deck
 
 
-
-straitFlush = "AH JH QH KH 0H"
+-- straitFlush = "AH JH QH KH 0H"
