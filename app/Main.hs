@@ -33,7 +33,7 @@ runSingleDiscard :: Deck -> Hand -> Card -> IO Bool
 runSingleDiscard deck hand discard  = do
   randomCard <- getRandomElement $ deck \\ hand  
   let newHand = randomCard : (hand \\ [discard])
-  return $ (findRank newHand) > (findRank hand)
+  return $ findRank newHand > findRank hand
     
 
 iterrateDiscard :: Deck -> Hand -> Card
@@ -51,16 +51,41 @@ iterrateDiscard deck hand card iterCount success fail = do
         iterations = fromIntegral $ fail + success
 
 
-
+runSimulation deck hand card = do    
+  probImprove <- iterrateDiscard deck hand card 3000 0 0
   
+  putStrLn $ "probabilyty of improvement with discarding " ++ show card
+  putStrLn $ show probImprove
+  putStrLn ""
+
 
 main :: IO ()
 main = do
-  hand <- getRandomHand  
-  randomDiscard <- getRandomElement hand
+  --hand <- getRandomHand
 
-  probImprove <- iterrateDiscard standardDeck hand randomDiscard 1000 0 0
+  let first  = [ (Two, Dimond)
+               , (Two, Clubs)
+               , (Five, Heart)
+               , (Two, Heart)
+               , (Two, Spade)
+               ]
+
+  -- let hand = [ (Seven, Clubs)
+  --            , (Six, Clubs)
+  --            , (Eight, Dimond)
+  --            , (Five, Clubs)
+  --            , (Four, Clubs)
+  --            ]               
+
+  let hand  = [ (Ace, Clubs)
+               , (Three, Heart)
+               , (Five, Clubs)
+               , (Nine, Spade)
+               , (Seven, Dimond)
+               ]
 
   putStrLn $ "hand: " ++ show hand
-  putStrLn $ "probabilyty of improvement with discarding " ++ show randomDiscard
-  putStrLn $ show probImprove
+  putStrLn $ "current rank: " ++ show  (findRank hand)
+  
+  mapM_ (runSimulation standardDeck hand) hand
+  --runSimulation standardDeck hand randomDiscard

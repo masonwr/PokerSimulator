@@ -25,12 +25,10 @@ findRank cards
   -- TODO this is no good. must get the maximum excluding the pair.
   | isPair cards          = Pair         (extract cards, maximum cards)  
   | otherwise             = HighCard     $ maximum cards       
-  where extract = fst . snd . maximum . zipCountCollected . (collectBy fst)
-
+  where extract = fst . snd . maximum . zipCountCollected . collectBy fst
 
 
 -- Rank Predicate Tests
-
 isPair :: Hand -> Bool
 isPair = (2 `elem`) . countCollectedRank 
 
