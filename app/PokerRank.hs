@@ -1,6 +1,7 @@
 module PokerRank where
+
 import Data.List
-import Hands
+import PokerData
 
 data PokerRank = HighCard Card
                | Pair (Rank, Card)

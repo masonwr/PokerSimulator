@@ -1,6 +1,6 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Hands where
+module PokerData where
 
 type HandStr = String
 

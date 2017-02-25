@@ -1,7 +1,7 @@
 module Main where
 import System.Random
 import Data.List
-import Hands
+import PokerData
 import PokerRank
 
 
