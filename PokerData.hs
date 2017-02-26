@@ -7,15 +7,14 @@ type HandStr = String
 data Suit = Spade
           | Heart
           | Dimond
-          | Clubs
+          | Club
           deriving (Eq, Ord, Enum)
 
 instance Show Suit where
   show Spade = "♠"
   show Heart = "❤"
-  show Clubs = "♣"
+  show Club = "♣"
   show Dimond = "♦"
-
 
 data Rank = Two
           | Three

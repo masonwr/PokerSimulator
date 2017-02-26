@@ -1,4 +1,6 @@
 module Main where
+
+import System.Environment
 import System.Random
 import Data.List
 import PokerData
@@ -51,6 +53,7 @@ iterrateDiscard deck hand card iterCount success fail = do
         iterations = fromIntegral $ fail + success
 
 
+runSimulation :: Deck -> Hand -> Card -> IO ()
 runSimulation deck hand card = do    
   probImprove <- iterrateDiscard deck hand card 3000 0 0
   
@@ -59,33 +62,44 @@ runSimulation deck hand card = do
   putStrLn ""
 
 
-main :: IO ()
-main = do
-  --hand <- getRandomHand
-
-  let first  = [ (Two, Dimond)
-               , (Two, Clubs)
-               , (Five, Heart)
-               , (Two, Heart)
-               , (Two, Spade)
-               ]
-
-  -- let hand = [ (Seven, Clubs)
-  --            , (Six, Clubs)
-  --            , (Eight, Dimond)
-  --            , (Five, Clubs)
-  --            , (Four, Clubs)
-  --            ]               
-
-  let hand  = [ (Ace, Clubs)
-               , (Three, Heart)
-               , (Five, Clubs)
-               , (Nine, Spade)
-               , (Seven, Dimond)
-               ]
-
+runHand :: Hand -> IO ()
+runHand hand = do
   putStrLn $ "hand: " ++ show hand
   putStrLn $ "current rank: " ++ show  (findRank hand)
   
   mapM_ (runSimulation standardDeck hand) hand
-  --runSimulation standardDeck hand randomDiscard
+  
+
+main :: IO ()
+main = do
+
+  [inFPath] <- getArgs
+  ifile <- readFile inFPath
+
+  mapM_ putStrLn (lines ifile)
+  
+  --hand <- getRandomHand
+
+  -- let first  = [ (Two, Dimond)
+  --              , (Two, Clubs)
+  --              , (Five, Heart)
+  --              , (Two, Heart)
+  --              , (Two, Spade)
+  --              ]
+
+  -- -- let hand = [ (Seven, Clubs)
+  -- --            , (Six, Clubs)
+  -- --            , (Eight, Dimond)
+  -- --            , (Five, Clubs)
+  -- --            , (Four, Clubs)
+  -- --            ]               
+
+  -- let hand  = [ (Ace, Clubs)
+  --              , (Three, Heart)
+  --              , (Five, Clubs)
+  --              , (Nine, Spade)
+  --              , (Seven, Dimond)
+  --              ]
+
+  
+  --mapM_ runHand [first, hand]
