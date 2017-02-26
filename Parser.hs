@@ -13,12 +13,8 @@ oneOf' xs = toUpper <$> (oneOf xs''<|> oneOf xs')
         xs'' = map toUpper xs
 
 -- this order needs to match the order the data types are defined instance
-ranks :: [Char]
 ranks = "23456789TJQKA"
-
-suits :: [Char]
 suits = "SHDC"
-
 
 handParser :: String -> Either ParseError [Card]
 handParser = parse parseHand "" 
