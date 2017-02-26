@@ -1,0 +1,36 @@
+2D 2C 5H 2H 2S >>>Four of a Kind 0.0% 0.0% 0.0% 0.0% 0.0%
+6C 5C 8D 7C 4S >>>Straight 0.0% 0.0% 0.0% 0.0% 8.5%
+7C 6C 8D 5C 4C >>>Straight 0.0% 0.0% 19.1% 0.0% 8.5%
+AC 3S 5S 1H 9D >>>Error
+AC 3S 5S 9D >>>Error
+5C 3S 5S 4s 5D >>>Error
+5C 3S 5 4S 5D >>>Error
+5C 3S 5S   4S 5D >>>Error
+5C 3S 5S 4S 3S >>>Error
+5C 3S 5S 4S 2S 2D >>>Error
+   5C 3S 5S 4S 2S >>>Error
+5C 3S 10S 4S 2S >>>Error
+4C 2C 4D 4H KD >>>Three of a Kind 0.0% 8.5% 0.0% 0.0% 8.5%
+5D 5C 5H 0S JS >>>Three of a Kind 0.0% 0.0% 0.0% 8.5% 8.5%
+8D 7H 8H 9H 0H >>>Pair 44.7% 17.0% 29.8% 17.0% 17.0%
+6S 3S 5S 4S 7S >>>Straight Flush 0.0% 2.1% 0.0% 0.0% 0.0%
+5C 5S 5D 4C 4S >>>Full House 0.0% 0.0% 0.0% 2.1% 2.1%
+4C 2C 4D 4H 4S >>>Four of a Kind 0.0% 0.0% 0.0% 0.0% 0.0%
+7C 6C 8D 5C 4S >>>Straight 0.0% 0.0% 0.0% 0.0% 8.5%
+7C 6C 8D 5C 4C >>>Straight 0.0% 0.0% 19.1% 0.0% 8.5%
+3H AH 3D AS 4H >>>Two Pair 10.6% 4.3% 10.6% 4.3% 8.5%
+QC AC JC KH 0C >>>Straight 0.0% 0.0% 0.0% 19.1% 0.0%
+2C AH 5D 7S JS >>>High Card 25.5% 25.5% 25.5% 25.5% 25.5%
+5D 3D 8S 2D 8D >>>Pair 17.0% 17.0% 19.1% 17.0% 0.0%
+2H 5H AD 4D 3H >>>Straight 0.0% 0.0% 8.5% 0.0% 0.0%
+9S 0H 0S JC JD >>>Two Pair 8.5% 4.3% 4.3% 4.3% 4.3%
+AC 3H 5C 9S 7D >>>High Card 25.5% 25.5% 25.5% 25.5% 25.5%
+QH 0D KD 3D 7D >>>High Card 51.1% 34.0% 34.0% 34.0% 34.0%
+QH 4D 6S 0S QC >>>Pair 0.0% 17.0% 17.0% 17.0% 0.0%
+QS 4S 6S 0S QD >>>Pair 0.0% 17.0% 17.0% 17.0% 19.1%
+QS 4S 6S 0S KS >>>Flush 2.1% 12.8% 10.6% 4.3% 2.1%
+AC AD AH AS 2C >>>Four of a Kind 0.0% 0.0% 0.0% 0.0% 0.0%
+KD KH 2H 2S KS >>>Full House 0.0% 0.0% 2.1% 2.1% 0.0%
+5C 9H 8C KD 6S >>>High Card 34.0% 34.0% 34.0% 42.6% 34.0%
+6S 2D 8C 9H 5C >>>High Card 68.1% 76.6% 68.1% 68.1% 68.1%
+KD QD AD JD 0D >>>Straight Flush 0.0% 0.0% 0.0% 0.0% 0.0%
