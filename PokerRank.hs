@@ -71,18 +71,16 @@ isFourOfAKind = (4 `elem`) . countCollectedRank
 isStraightFlush :: Hand -> Bool
 isStraightFlush cards = isFlush cards && isStraight cards
 
-
 -- Utils  
 collectBy :: Ord b => (t -> b) -> [t] -> [[t]]
 collectBy fn = groupBy comp . sortOn fn
   where comp c1 c2 = fn c1 == fn c2
 
 zipCountCollected :: [[t]] -> [(Int, t)]
-zipCountCollected = map simpler
-  where simpler xs = (length xs, head xs)
+zipCountCollected = map $ \xs -> (length xs, head xs)
 
 countCollected :: Foldable t => (a -> [t a1]) -> a -> [Int]
-countCollected collector = (map length) . collector
+countCollected collector = map length . collector
 
 countCollectedRank :: Deck -> [Int]
 countCollectedRank = countCollected $ collectBy fst
