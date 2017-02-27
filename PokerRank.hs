@@ -2,7 +2,6 @@ module PokerRank where
 
 import Data.List
 import PokerData
-import Control.Monad
 
 data PokerRank = HighCard Card
                | Pair (Rank, [Card])
@@ -39,8 +38,6 @@ findRank cards
   | isPair cards          = Pair         (extract cards, sort cards)  
   | otherwise             = HighCard     $ maximum cards       
   where extract = fst . snd . maximum . zipCountCollected . collectBy fst
-
-
 
 
 -- Rank Predicate Tests
