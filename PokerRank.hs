@@ -2,6 +2,7 @@ module PokerRank where
 
 import Data.List
 import PokerData
+import Control.Monad
 
 data PokerRank = HighCard Card
                | Pair (Rank, [Card])
@@ -77,7 +78,7 @@ collectBy fn = groupBy comp . sortOn fn
   where comp c1 c2 = fn c1 == fn c2
 
 zipCountCollected :: [[t]] -> [(Int, t)]
-zipCountCollected = map $ \xs -> (length xs, head xs)
+zipCountCollected = map $ (,) <$> length <*> head
 
 countCollected :: Foldable t => (a -> [t a1]) -> a -> [Int]
 countCollected collector = map length . collector
