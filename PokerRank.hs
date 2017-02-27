@@ -4,7 +4,7 @@ import Data.List
 import PokerData
 
 data PokerRank = HighCard Card
-               | Pair (Rank, Card)
+               | Pair (Rank, [Card])
                | TwoPair Hand
                | ThreeOfAKind Rank
                | Straight Card
@@ -12,7 +12,19 @@ data PokerRank = HighCard Card
                | FullHouse Rank
                | FourOfAKind Rank
                | StraitFlush Card
-               deriving (Eq, Ord, Show)
+               deriving (Eq, Ord)
+        
+instance Show PokerRank where
+  show (HighCard _)      = "High Card"
+  show (Pair _)          = "Pair"
+  show (TwoPair _)       = "Two Pair"
+  show (ThreeOfAKind _ ) = "Three of A Kind"
+  show (Straight _ )     = "Straight"
+  show (Flush _)         = "Flush"
+  show (FullHouse _)     = "Full House"
+  show (FourOfAKind _ )  = "Four Of A Kind"
+  show (StraitFlush _)   = "Straight Flush"
+
 
 findRank :: Hand -> PokerRank
 findRank cards
@@ -24,9 +36,11 @@ findRank cards
   | isThreeOfAKind cards  = ThreeOfAKind $ extract cards
   | isTwoPair cards       = TwoPair      $ sort cards
   -- TODO this is no good. must get the maximum excluding the pair.
-  | isPair cards          = Pair         (extract cards, maximum cards)  
+  | isPair cards          = Pair         (extract cards, sort cards)  
   | otherwise             = HighCard     $ maximum cards       
   where extract = fst . snd . maximum . zipCountCollected . collectBy fst
+
+
 
 
 -- Rank Predicate Tests

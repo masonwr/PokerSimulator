@@ -1,11 +1,12 @@
 module Main where
 
 import System.Environment
+import Text.Printf
 import System.Random
 import Data.List
 import PokerData
 import PokerRank
-
+import Parser
 
 getRandomElement :: [a] -> IO a
 getRandomElement xs = do
@@ -55,28 +56,41 @@ iterrateDiscard deck hand card iterCount success fail = do
 
 runSimulation :: Deck -> Hand -> Card -> IO ()
 runSimulation deck hand card = do    
-  probImprove <- iterrateDiscard deck hand card 3000 0 0
+  probImprove <- iterrateDiscard deck hand card 5000 0 0
+  putStr $ roundToStr 2 (probImprove * 100) ++ "\t"
   
-  putStrLn $ "probabilyty of improvement with discarding " ++ show card
-  putStrLn $ show probImprove
-  putStrLn ""
+  --putStr $ show probImprove  ++ " "
+
+
+--formapProp :: Double -> String
 
 
 runHand :: Hand -> IO ()
 runHand hand = do
-  putStrLn $ "hand: " ++ show hand
-  putStrLn $ "current rank: " ++ show  (findRank hand)
-  
+  putStr $ show (findRank hand) ++ "\t\t"  
   mapM_ (runSimulation standardDeck hand) hand
-  
+  putStrLn ""
+
+
+
+processHandString str = do
+  putStr $ str ++ " >>> \t"  
+  let hand = validatehand $ handParser str
+  case hand of
+    Right h -> do      
+      runHand h
+    Left  err -> do
+      putStrLn "Error"
+
+roundToStr :: (PrintfArg a, Floating a) => Int -> a -> String
+roundToStr n f = printf ("%0." ++ show n ++ "f") f
 
 main :: IO ()
-main = do
-
+main = do  
   [inFPath] <- getArgs
   ifile <- readFile inFPath
-
-  mapM_ putStrLn (lines ifile)
+  mapM_ processHandString (lines ifile)
+  
   
   --hand <- getRandomHand
 
