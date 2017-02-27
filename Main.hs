@@ -1,12 +1,24 @@
 module Main where
 
-import System.Environment
-import Text.Printf
-import System.Random
-import Data.List
+import System.Environment (getArgs)
+import Text.Printf (PrintfArg, printf)
+import System.Random (getStdRandom, randomR)
+import Data.List ((\\), nub)
 import PokerData
 import PokerRank
 import Parser
+
+
+main :: IO ()
+main = do
+  args <- getArgs  
+
+  if not (null args)
+    then do 
+    ifile <- readFile $ head args
+    mapM_ processHandString (lines ifile)
+    else putStrLn "Usage: ./Main [file]"  
+
 
 getRandomElement :: [a] -> IO a
 getRandomElement xs = do
@@ -41,29 +53,22 @@ runSingleDiscard deck hand discard  = do
 
 iterrateDiscard :: Deck -> Hand -> Card
                 -> Integer -> Integer -> Integer -> IO Double
-iterrateDiscard deck hand card iterCount success fail = do
-  if iterCount > 0
+iterrateDiscard deck hand card iterCount success failExp = if iterCount > 0
     then do
     better <- runSingleDiscard deck hand card
     if better
-      then iterrateDiscard deck hand card (iterCount - 1) (success + 1) fail
-      else iterrateDiscard deck hand card (iterCount - 1) success (fail + 1)
+      then iterrateDiscard deck hand card (iterCount - 1) (success + 1) failExp
+      else iterrateDiscard deck hand card (iterCount - 1) success (failExp + 1)
     else return $ success' / iterations
 
   where success' = fromIntegral success
-        iterations = fromIntegral $ fail + success
+        iterations = fromIntegral $ failExp + success
 
 
 runSimulation :: Deck -> Hand -> Card -> IO ()
 runSimulation deck hand card = do    
   probImprove <- iterrateDiscard deck hand card 5000 0 0
   putStr $ roundToStr 2 (probImprove * 100) ++ "\t"
-  
-  --putStr $ show probImprove  ++ " "
-
-
---formapProp :: Double -> String
-
 
 runHand :: Hand -> IO ()
 runHand hand = do
@@ -71,49 +76,15 @@ runHand hand = do
   mapM_ (runSimulation standardDeck hand) hand
   putStrLn ""
 
-
-
+processHandString :: String -> IO ()
 processHandString str = do
   putStr $ str ++ " >>> \t"  
   let hand = validatehand $ handParser str
   case hand of
-    Right h -> do      
-      runHand h
-    Left  err -> do
-      putStrLn "Error"
+    Right h -> runHand h
+    Left  _ -> putStrLn "Error"
 
 roundToStr :: (PrintfArg a, Floating a) => Int -> a -> String
-roundToStr n f = printf ("%0." ++ show n ++ "f") f
-
-main :: IO ()
-main = do  
-  [inFPath] <- getArgs
-  ifile <- readFile inFPath
-  mapM_ processHandString (lines ifile)
-  
-  
-  --hand <- getRandomHand
-
-  -- let first  = [ (Two, Dimond)
-  --              , (Two, Clubs)
-  --              , (Five, Heart)
-  --              , (Two, Heart)
-  --              , (Two, Spade)
-  --              ]
-
-  -- -- let hand = [ (Seven, Clubs)
-  -- --            , (Six, Clubs)
-  -- --            , (Eight, Dimond)
-  -- --            , (Five, Clubs)
-  -- --            , (Four, Clubs)
-  -- --            ]               
-
-  -- let hand  = [ (Ace, Clubs)
-  --              , (Three, Heart)
-  --              , (Five, Clubs)
-  --              , (Nine, Spade)
-  --              , (Seven, Dimond)
-  --              ]
+roundToStr n = printf ("%0." ++ show n ++ "f") 
 
   
-  --mapM_ runHand [first, hand]

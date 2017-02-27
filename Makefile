@@ -1,5 +1,5 @@
 all:
-	ghc -outputdir /tmp Main.hs
+	ghc -O2 -outputdir /tmp Main.hs
 test:
 	./Main ./IO_examples/poker.in
 clean:

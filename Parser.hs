@@ -6,15 +6,14 @@ module Parser
   )
 where
 
-import Text.ParserCombinators.Parsec (ParseError, Parser, parse, spaces, oneOf, (<|>), sepEndBy)
+import Text.ParserCombinators.Parsec 
 import Data.List 
 import Data.Char (toUpper, toLower)
-import Text.ParserCombinators.Parsec.Error
 import Data.Maybe (fromJust)
 import PokerData 
 
 
--- this order needs to match the order the data types are defined instance
+-- this order needs to match the order of the respective data types.
 ranks = "234567890JQKA"
 suits = "SHDC"
 
@@ -33,16 +32,19 @@ parseZip :: String -> [b] -> Parser b
 parseZip xs ys = fromJust . flip lookup (zip xs ys) <$> oneOf' xs  
 
 
+oneOf' :: String -> Parser Char
 oneOf' xs = toUpper <$> (oneOf xs''<|> oneOf xs')
   where xs'  = map toLower xs
         xs'' = map toUpper xs
 
-
+validatehand :: Either ParseError Hand -> Either String Hand
 validatehand parsed =
   case parsed of
-    Right h -> do
+    Right h -> 
       if isValid h
         then Right h
         else Left  "Invalid Hand"
-    Left er -> Left $ "hmm"
+    Left err -> Left $ "Error! " ++ show err
   where isValid h = length (nub h) == 5
+
+
