@@ -1,17 +1,11 @@
 {-# LANGUAGE FlexibleContexts #-}
-
-module Parser
-  ( handParser
-  , validatehand
-  )
-where
+module Parser (handParser , validatehand) where
 
 import Text.ParserCombinators.Parsec 
 import Data.List 
 import Data.Char (toUpper, toLower)
 import Data.Maybe (fromJust)
 import PokerData 
-
 
 -- this order needs to match the order of the respective data types.
 ranks = "234567890JQKA"
@@ -30,7 +24,6 @@ parseCard = (,) <$> parseRank <*> parseSuit
    
 parseZip :: String -> [b] -> Parser b
 parseZip xs ys = fromJust . flip lookup (zip xs ys) <$> oneOf' xs  
-
 
 oneOf' :: String -> Parser Char
 oneOf' xs = toUpper <$> (oneOf xs''<|> oneOf xs')

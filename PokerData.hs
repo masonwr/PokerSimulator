@@ -1,8 +1,5 @@
 {-# LANGUAGE UnicodeSyntax #-}
-
 module PokerData where
-
-type HandStr = String
 
 data Suit = Spade
           | Heart
@@ -31,16 +28,9 @@ data Rank = Two
           | Ace
           deriving (Eq, Ord, Enum, Show)
 
-
 type Card = (Rank, Suit)
 type Deck = [Card]
 type Hand = Deck
 
-
 standardDeck :: Deck
 standardDeck  = [(r,s) | s <- [Spade ..], r <- [Two ..]]
-
-
-
-
--- straitFlush = "AH JH QH KH 0H"

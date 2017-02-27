@@ -34,8 +34,7 @@ findRank cards
   | isFlush cards         = Flush        $ snd $ head cards 
   | isStraight cards      = Straight     $ maximum cards    
   | isThreeOfAKind cards  = ThreeOfAKind $ extract cards
-  | isTwoPair cards       = TwoPair      $ sort cards
-  -- TODO this is no good. must get the maximum excluding the pair.
+  | isTwoPair cards       = TwoPair      $ sort cards  
   | isPair cards          = Pair         (extract cards, sort cards)  
   | otherwise             = HighCard     $ maximum cards       
   where extract = fst . snd . maximum . zipCountCollected . collectBy fst
