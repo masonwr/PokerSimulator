@@ -1,5 +1,5 @@
 ``` shell
-$ git clone https://github.com/masonwr/Hasker.git
-$ cd Hasker && make 
+$ git clone https://github.com/masonwr/PokerSimulator.git
+$ cd PokerSimulator && make 
 $ make test
 ```
